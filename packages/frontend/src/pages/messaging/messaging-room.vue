@@ -95,6 +95,7 @@ const showIndicator = ref(false);
 const animation = defaultStore.reactiveState;
 
 const pagination = ref<Paging | null>(null);
+const scrollRemove = ref<(() => void) | null>(null);
 
 watch([() => props.userAcct, () => props.groupId], () => {
 	if (connection.value) connection.value.dispose();
