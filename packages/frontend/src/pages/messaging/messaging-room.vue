@@ -237,27 +237,9 @@ function onDeleted(id) {
 	pagingComponent.value.items.delete(id);
 }
 
-function onIndicatorClick() {
-    // インジケーターを非表示にする
-    showIndicator.value = false;
-
-    // スクロール位置を下に移動
-    nextTick(() => {
-        thisScrollToBottom();
-    });
-}
-
-function thisScrollToBottom() {
-    if (window.location.href.includes('my/messaging/')) {
-        scrollToBottom(rootEl.value, { behavior: 'smooth' });
-    }
-}
-
 function onMessage(message) {
     sound.playMisskeySfx('chat');
     vibrate(defaultStore.state.vibrateChat ? [30, 30, 30] : []);
-
-    const _isBottom = isBottomVisible(rootEl.value, 64);
 
     pagingComponent.value.prepend(message);
 
@@ -270,10 +252,25 @@ function onMessage(message) {
         });
     }
 
-    // 追加：_isBottom に関係なく常にボトムにスクロールする
+    // 常にボトムにスクロールする
     nextTick(() => {
         thisScrollToBottom();
     });
+}
+
+function onIndicatorClick() {
+    showIndicator.value = false;
+
+    // ボトムにスクロールする
+    nextTick(() => {
+        thisScrollToBottom();
+    });
+}
+
+function thisScrollToBottom() {
+    if (window.location.href.includes('my/messaging/')) {
+        scrollToBottom(rootEl.value, { behavior: 'auto' });
+    }
 }
 
 function notifyNewMessage() {
