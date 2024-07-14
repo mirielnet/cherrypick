@@ -270,13 +270,10 @@ function onMessage(message) {
         });
     }
 
-    if (_isBottom) {
-        nextTick(() => {
-            thisScrollToBottom();
-        });
-    } else if (message.userId !== $i?.id) {
-        notifyNewMessage();
-    }
+    // 追加：_isBottom に関係なく常にボトムにスクロールする
+    nextTick(() => {
+        thisScrollToBottom();
+    });
 }
 
 function notifyNewMessage() {
